@@ -1,1 +1,4 @@
-gem 'sfrp', git: 'git://github.com/sfrp/sfrp.git', branch: "master"
+source 'https://rubygems.org'
+
+gem 'sfrp', github: 'sfrp/sfrp'
+gem 'rake'
