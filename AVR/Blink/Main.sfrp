@@ -1,0 +1,10 @@
+import Base
+import IO.AVR.ATMEGA8 as IO
+
+out IO.$portD(7, @blink)
+
+@count(0) : Int = (@@count + 1) % 100
+
+@blink(True) : Bool =
+  if @count == 0 then !@@blink else @@blink
+

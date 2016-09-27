@@ -1,0 +1,12 @@
+-- Main.sfrp
+import Base
+import IO.STDIO as SIO
+
+in @in from SIO.$getIntPair()
+out SIO.$putIntPair(fst(@x), snd(@x))
+
+op <+>(a, b) = (ax + bx, ay + by)
+  where (ax, ay) = a -- get elements of tuple a
+        (bx, by) = b -- get elements of tuple b
+
+@x (0,0) = @in <+> @@x
