@@ -1,4 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'sfrp', :path => '../sfrp'
-gem 'rake'
+V = '1.2.1'
+LOCAL_SFRP_PATH = File.expand_path('../../sfrp', __FILE__)
+
+if File.directory?(LOCAL_SFRP_PATH)
+  gem 'sfrp', V, :path => LOCAL_SFRP_PATH
+else
+  gem 'sfrp', V, :github => 'sfrp/sfrp'
+end
