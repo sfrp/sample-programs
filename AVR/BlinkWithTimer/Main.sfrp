@@ -1,0 +1,13 @@
+import Base
+import Base.IO.AVR.ATMEGA8.GPIO as IO
+import Base.IO.AVR.ATMEGA8.Timer as Timer
+
+out IO.$portD(7, @blink)
+
+@every3sec(0, False) : (Int, Bool) = (sum % 3000, sum >= 3000)
+  where
+    (elapsedTime, _) = @@every3sec
+    sum = elapsedTime + Timer.@elapsedTime
+
+@blink(True) : Bool =
+  if snd(@every3sec) then !@@blink else @@blink

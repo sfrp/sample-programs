@@ -1,5 +1,5 @@
 import Base
-import IO.AVR.ATMEGA8 as IO
+import Base.IO.AVR.ATMEGA8.GPIO as IO
 
 out IO.$portD(7, @blink)
 
@@ -7,4 +7,3 @@ out IO.$portD(7, @blink)
 
 @blink(True) : Bool =
   if @count == 0 then !@@blink else @@blink
-
