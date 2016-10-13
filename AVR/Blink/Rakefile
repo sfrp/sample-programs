@@ -1,5 +1,6 @@
 task :default do
   sh "bundle exec sfrp --build='avr-gcc -Os -mmcu=atmega8'"
+  sh 'avr-size Main'
 end
 
 task :install => :default do
