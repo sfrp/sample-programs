@@ -8,4 +8,5 @@ install:
   - sudo apt-get install binutils-avr gcc-avr avr-libc avrdude
   - gem install bundler
 script:
+  - avr-gcc --version
   - rake test
