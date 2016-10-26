@@ -1,0 +1,69 @@
+import Base
+import Base.AVR.ATMEGA8.GPIO as IO
+import Base.AVR.ATMEGA8.Timer as Timer
+
+type Time = Time(Int, Int, Int)
+type State = Alert | CountDown(Time) | Wait(Time)
+
+-- NODE
+
+@state Wait(Time(0, 0, 0)) : State =
+  let
+    event =
+      (IO.@posEdgePB0, IO.@posEdgePB1, IO.@posEdgePB2, IO.@pinB0 && IO.@pinB1)
+  in
+    case @@state of
+      Alert ->
+        case event of
+          (_, _, True, _) -> Wait(Time(0, 0, 0))
+          _ -> Alert
+      CountDown(Time(0, 0, 0)) ->
+        Alert
+      CountDown(restTime) ->
+        case event of
+          (_, _, True, _) -> Wait(restTime)
+          _ -> CountDown(decreaseTime(restTime, Timer.@elapsedTime))
+      Wait(Time(minute, second, _) as time) ->
+        case event of
+          (True, _, _, _) -> Wait(Time((minute + 1) % 100, second, 0))
+          (_, True, _, _) -> Wait(Time(minute, (second + 1) % 60, 0))
+          (_, _, True, _) ->
+            case time of
+              Time(0, 0, _) -> Wait(time)
+              _ -> CountDown(time)
+          (_, _, _, True) -> Wait(Time(0, 0, 0))
+          _ -> Wait(time)
+
+-- FUNCTION
+
+decreaseTime(time, msecondD) =
+  -- msecondD must be less than 1000
+  let
+    Time(minute, second, msecond) = time
+  in
+    if msecondD <= msecond then
+      Time(minute, second, msecond - msecondD)
+    else if second == 0 then
+      if minute == 0 then
+        Time(0, 0, 0)
+      else
+        Time(minute - 1, 59, msecond - msecondD + 1000)
+    else
+      Time(minute, second - 1, msecond - msecondD + 1000)
+
+-- OUTPUTS
+
+out $output(@state)
+
+$output(state) =
+  case state of
+    Alert ->
+      $beep(True) <> $display(0, 0, 0, 0)
+    Wait(Time(min, sec, _)) ->
+      $beep(False) <> $display(min / 10, min % 10, sec / 10, sec % 10)
+    CountDown(Time(min, sec, _)) ->
+      $beep(False) <> $display(min / 10, min % 10, sec / 10, sec % 10)
+
+$beep(s) = IO.$portD(7, !s)
+
+foreign display as $display(Int, Int, Int, Int) : Unit

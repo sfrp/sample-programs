@@ -1,0 +1,16 @@
+task :default do
+  sh "bundle exec sfrp --build='avr-gcc -Os -fstack-usage -mmcu=atmega8'"
+  sh 'cat main.su'
+  sh 'cat Timer.su'
+  sh 'cat GPIO.su'
+  sh 'cat Main.su'
+  sh 'avr-size Main'
+end
+
+task :install => :default do
+  sh "sudo avrdude -c avrispmkII -P usb -p m8 -U flash:w:Main:e -v"
+end
+
+task :clean do
+  sh 'rm -rf ./Main ./output ./*.su'
+end
