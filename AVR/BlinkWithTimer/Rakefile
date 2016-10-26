@@ -1,5 +1,8 @@
 task :default do
-  sh "bundle exec sfrp --build='avr-gcc -Os -fstack-usage -mmcu=atmega8'"
+  fstack_opt = `avr-gcc --version`.match(/(\d+)\.(\d+)\.(\d+)/) do |m|
+    m[1].to_i >= 4 && m[2].to_i >= 6 ? '-fstack-usage' : ''
+  end
+  sh "bundle exec sfrp --build='avr-gcc -Os #{fstack_opt} -mmcu=atmega8'"
   sh 'cat main.su'
   sh 'cat Timer.su'
   sh 'cat GPIO.su'

@@ -8,6 +8,9 @@ task :test do
     cd 'BlinkWithTimer' do
       sh 'rake'
     end
+    cd 'Timer' do
+      sh 'rake clean; rake'
+    end
   end
   cd 'PC' do
     cd 'PointAccum' do
