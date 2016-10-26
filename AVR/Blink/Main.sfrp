@@ -1,5 +1,5 @@
 import Base
-import Base.IO.AVR.ATMEGA8.GPIO as IO
+import Base.AVR.ATMEGA8.GPIO as IO
 
 out IO.$portD(7, @blink)
 

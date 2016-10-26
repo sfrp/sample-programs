@@ -1,6 +1,6 @@
 import Base
-import Base.IO.AVR.ATMEGA8.GPIO as IO
-import Base.IO.AVR.ATMEGA8.Timer as Timer
+import Base.AVR.ATMEGA8.GPIO as IO
+import Base.AVR.ATMEGA8.Timer as Timer
 
 out IO.$portD(7, @blink)
 

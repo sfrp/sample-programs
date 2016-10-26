@@ -1,3 +1,4 @@
+desc 'build all'
 task :test do
   sh 'bundle install --path=./vendor/bundle'
   cd 'AVR' do

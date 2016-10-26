@@ -1,10 +1,5 @@
 task :default do
-  sh "bundle exec sfrp --build='avr-gcc -Os -mmcu=atmega8'"
-  sh 'avr-size Main'
-end
-
-task :stack do
-  sh "bundle exec sfrp --build='avr-gcc -Os -stack-usage -mmcu=atmega8'"
+  sh "bundle exec sfrp --build='avr-gcc -Os -fstack-usage -mmcu=atmega8'"
   sh 'cat main.su'
   sh 'cat Timer.su'
   sh 'cat GPIO.su'
@@ -16,5 +11,5 @@ task :install => :default do
 end
 
 task :clean do
-  sh 'rm -rf ./Main ./output'
+  sh 'rm -rf ./Main ./output ./*.su'
 end
