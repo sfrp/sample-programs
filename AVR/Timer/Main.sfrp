@@ -28,16 +28,13 @@ type State = Alert | CountDown(Time) | Wait(Time)
           (True, _, _, _) -> Wait(Time((minute + 1) % 100, second, 0))
           (_, True, _, _) -> Wait(Time(minute, (second + 1) % 60, 0))
           (_, _, True, _) ->
-            case time of
-              Time(0, 0, _) -> Wait(time)
-              _ -> CountDown(time)
+            case time of Time(0, 0, _) -> Wait(time) ; _ -> CountDown(time)
           (_, _, _, True) -> Wait(Time(0, 0, 0))
           _ -> Wait(time)
 
 -- FUNCTION
 
 decreaseTime(time, msecondD) =
-  -- msecondD must be less than 1000
   let
     Time(minute, second, msecond) = time
   in
