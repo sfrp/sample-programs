@@ -7,7 +7,7 @@ type State = Alert | CountDown(Time) | Wait(Time)
 
 -- NODE
 
-@state Wait(Time(0, 0, 0)) : State =
+@state init Wait(Time(0, 0, 0)) : State =
   let
     event =
       (IO.@posEdgePB0, IO.@posEdgePB1, IO.@posEdgePB2, IO.@pinB0 && IO.@pinB1)

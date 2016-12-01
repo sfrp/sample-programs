@@ -3,7 +3,7 @@ import Base.AVR.ATMEGA8.GPIO as IO
 
 out IO.$portD(7, @blink)
 
-@count(0) : Int = (@@count + 1) % 100
+@count init 0 : Int = (@@count + 1) % 100
 
-@blink(True) : Bool =
+@blink init True : Bool =
   if @count == 0 then !@@blink else @@blink

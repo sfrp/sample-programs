@@ -9,4 +9,4 @@ op <+>(a, b) = (ax + bx, ay + by)
   where (ax, ay) = a -- get elements of tuple a
         (bx, by) = b -- get elements of tuple b
 
-@x (0,0) = @in <+> @@x
+@x init (0,0) = @in <+> @@x

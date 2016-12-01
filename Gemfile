@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-V = '1.3.3'
+V = '1.4.0'
 LOCAL_SFRP_PATH = File.expand_path('../../sfrp', __FILE__)
 
 if File.directory?(LOCAL_SFRP_PATH)
