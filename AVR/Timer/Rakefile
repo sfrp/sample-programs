@@ -1,13 +1,13 @@
 task :default do
-  `avr-gcc --version`.match(/(\d+)\.(\d+)\.(\d+)/) do |m|
-    if m[1].to_i >= 4 && m[2].to_i >= 6
-      sh "bundle exec sfrp --build='avr-gcc -Os -fstack-usage -mmcu=atmega8'"
-    else
-      sh "bundle exec sfrp --build='avr-gcc -Os -mmcu=atmega8'"
-    end
-  end
+  sh "bundle exec sfrp --build='avr-gcc -Os -mmcu=atmega8'"
   sh 'avr-size Main'
 end
+
+task :stack do
+  sh "bundle exec sfrp --build='avr-gcc -Os -fstack-usage -mmcu=atmega8'"
+  sh 'avr-size Main'
+end
+
 
 task :install => :default do
   sh "sudo avrdude -c avrispmkII -P usb -p m8 -U flash:w:Main:e -v"
