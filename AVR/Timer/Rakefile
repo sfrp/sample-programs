@@ -1,10 +1,10 @@
 task :default do
-  sh "bundle exec sfrp --build='avr-gcc -Os -mmcu=atmega8'"
+  sh "bundle exec sfrp --build='avr-gcc -Os -mmcu=atmega8 -fdata-sections -ffunction-sections -Wl,--gc-sections'"
   sh 'avr-size Main'
 end
 
 task :stack do
-  sh "bundle exec sfrp --build='avr-gcc -Os -fstack-usage -mmcu=atmega8'"
+  sh "bundle exec sfrp --build='avr-gcc -Os -fstack-usage -mmcu=atmega8 -fdata-sections -ffunction-sections -Wl,--gc-sections'"
   sh 'avr-size Main'
 end
 
